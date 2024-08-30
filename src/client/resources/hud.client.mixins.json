@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.cherret.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"DisableRenderMixin",
+		"ItemTooltipMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "hud",
+	"version": "${version}",
+	"name": "CompactHUD",
+	"description": "The mod enhances the HUD by displaying detailed health, hunger, and experience bars in the top left, along with potion effects in the top right. It provides more information while keeping the interface clean.",
+	"authors": [
+		"Cherret"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/project/compacthud",
+		"sources": "https://github.com/CherretGit/CompactHud"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/hud/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.cherret.Hud"
+		],
+		"client": [
+			"com.cherret.HudClient"
+		]
+	},
+	"mixins": [
+		"hud.mixins.json",
+		{
+			"config": "hud.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.2",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
