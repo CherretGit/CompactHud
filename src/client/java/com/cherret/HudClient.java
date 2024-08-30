@@ -238,7 +238,10 @@ public class HudClient implements ClientModInitializer {
 		context.drawText(client.textRenderer, String.valueOf(experienceLevel), x + barWidth + 2, y - 2, 0xFFFFFFFF, false);
 	}
 	public static boolean isHardcoreMode(MinecraftServer server) {
-		ServerWorld world = server.getWorld(server.getOverworld().getRegistryKey());
-		return world.getLevelProperties().isHardcore();
+		if (server !=null) {
+			ServerWorld world = server.getWorld(server.getOverworld().getRegistryKey());
+			return world.getLevelProperties().isHardcore();
+		}
+		return false;
 	}
 }
