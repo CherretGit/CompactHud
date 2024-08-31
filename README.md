@@ -1,2 +1,2 @@
 # CompactHud
-At the moment the mod is being moderated by modrinth.
+This is the source code of my minecraft mod. Link to [modrinth](https://modrinth.com/mod/compacthud).
