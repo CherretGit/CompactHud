@@ -1,7 +1,12 @@
 package com.cherret;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -9,9 +14,12 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.PlayerSkinDrawer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.SkinTextures;
+import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class HudClient implements ClientModInitializer {
@@ -19,6 +27,7 @@ public class HudClient implements ClientModInitializer {
 	private static final int y = 10;
 	private static final int iconSize = 16;
 	private static final int textX = x + iconSize + 5;
+	private static int rectangleMode_lineY;
 	private static final int lineY = y + iconSize / 2;
 	private static int line_width = 2;
 	private static int line_height;
@@ -27,7 +36,6 @@ public class HudClient implements ClientModInitializer {
 	private static final int healthX = textX + 14;
 	private static final int healthY  = lineY + 11;
 	private static final int barWidth = 120;
-	private static final int barHeight = 5;
 	private static final int hungerX = textX + 14;
 	private static final int hungerY = lineY + 21;
 	private static final int experienceX = textX + 14;
@@ -67,6 +75,7 @@ public class HudClient implements ClientModInitializer {
 
     @Override
 	public void onInitializeClient() {
+		Config.loadConfig();
 		HudRenderCallback.EVENT.register(this::onHudRender);
 	}
 
@@ -78,21 +87,28 @@ public class HudClient implements ClientModInitializer {
 		GameProfile profile = client.player.getGameProfile();
 		SkinTextures skinTexture = client.getSkinProvider().getSkinTextures(profile);
 		renderPlayerHead(context, skinTexture, x, y, iconSize);
-		renderPlayerName(context, client.player.getName().getString(), textX, y + iconSize / 2 - 4);
-		renderLine(context, textX, y + iconSize / 2 + 6, 155, 2);
+		renderPlayerName(context, client.player.getName().getString(), textX, y + iconSize / 2 - 4, Config.HANDLER.instance().color_player_name.getRGB());
+		renderLine(context, textX, y + iconSize / 2 + 6, 155, 2, Config.HANDLER.instance().color_line_horizontal.getRGB());
 		if (client.player.isCreative() || client.player.isSpectator()) {
 			return;
 		}
+		rectangleMode_lineY = y + iconSize / 2 + 41;
 		line_height = 35;
 		airY = lineY + 41;
 		if (isArmorVisible && isAirVisible) {
 			airY += 10;
+			rectangleMode_lineY += 18;
 			line_height += 18;
 		}
 		else if (isArmorVisible || isAirVisible) {
+			rectangleMode_lineY += 8;
 			line_height += 8;
 		}
-		renderLine(context, textX, lineY + 6, line_width, line_height);
+		if (Config.HANDLER.instance().rectangleMode) {
+			renderLine(context, textX, rectangleMode_lineY, 155, 2, Config.HANDLER.instance().color_line_horizontal.getRGB());
+			renderLine(context, textX + 153, lineY + 6, line_width, line_height, Config.HANDLER.instance().color_line_vertical.getRGB());
+		}
+		renderLine(context, textX, lineY + 6, line_width, line_height, Config.HANDLER.instance().color_line_vertical.getRGB());
 		if (client.player.isSubmergedInWater()) {
 			renderAir(context, airX, airY);
 			isAirVisible = true;
@@ -116,14 +132,14 @@ public class HudClient implements ClientModInitializer {
 		PlayerSkinDrawer.draw(context, skinTextures, x, y, size);
 	}
 
-	public static void renderPlayerName(DrawContext context, String playerName, int x, int y) {
+	public static void renderPlayerName(DrawContext context, String playerName, int x, int y, int color) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		TextRenderer textRenderer = client.textRenderer;
-		context.drawText(textRenderer, playerName, x, y, 0xFFFFFFFF, false);
+		context.drawText(textRenderer, playerName, x, y, color, false);
 	}
 
-	public static void renderLine(DrawContext context, int x, int y, int width, int height) {
-		context.fill(x, y, x + width, y + height, 0xFFFFFFFF);
+	public static void renderLine(DrawContext context, int x, int y, int width, int height, int color) {
+		context.fill(x, y, x + width, y + height, color);
 	}
 
 	private void renderHealth(DrawContext context, int x, int y) {

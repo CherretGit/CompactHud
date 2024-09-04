@@ -1,0 +1,15 @@
+{
+  "config.hud.title": "Конфигурация CompactHud",
+  "config.hud.category_name": "Основные настройки",
+  "config.hud.category_tooltip": "Настройте основные параметры мода.",
+  "config.hud.group_name": "Настройки отображения",
+  "config.hud.group_description": "Опции, связанные с визуальной настройкой.",
+  "config.hud.color_player_name": "Цвет имени игрока",
+  "config.hud.color_player_name.description": "Установить цвет имени игрока",
+  "config.hud.color_line_horizontal": "Цвет горизонтальной линии",
+  "config.hud.color_line_horizontal.description": "Установить цвет горизонтальной линии",
+  "config.hud.color_line_vertical": "Цвет вертикальной линии",
+  "config.hud.color_line_vertical.description": "Установить цвет вертикальной линии",
+  "config.hud.rectangle_mode": "Режим прямоугольника",
+  "config.hud.rectangle_mode.description": "Включить или отключить режим прямоугольника"
+}

@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.cherret.HudClient"
+		],
+		"modmenu": [
+			"com.cherret.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -33,7 +36,8 @@
 		"fabricloader": ">=0.16.2",
 		"minecraft": "~1.21.1",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"yet_another_config_lib_v3": ">=3.5.0"
 	},
 	"suggests": {
 		"another-mod": "*"

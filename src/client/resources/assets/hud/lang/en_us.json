@@ -1,0 +1,15 @@
+{
+  "config.hud.title": "CompactHud Configuration",
+  "config.hud.category_name": "Main Settings",
+  "config.hud.category_tooltip": "Configure the main settings of the mod.",
+  "config.hud.group_name": "Visual Settings",
+  "config.hud.group_description": "Options related to visual customization.",
+  "config.hud.color_player_name": "Player Name Color",
+  "config.hud.color_player_name.description": "Set the player's name color",
+  "config.hud.color_line_horizontal": "Horizontal Line Color",
+  "config.hud.color_line_horizontal.description": "Set the color of the horizontal line",
+  "config.hud.color_line_vertical": "Vertical Line Color",
+  "config.hud.color_line_vertical.description": "Set the color of the vertical line",
+  "config.hud.rectangle_mode": "Rectangle Mode",
+  "config.hud.rectangle_mode.description": "Enable or disable rectangle mode"
+}
